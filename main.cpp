@@ -112,27 +112,24 @@ void BFSD_list(int* A2, int n, List** vrt, int a3)
 	cin.get();
 }
 
-void BFSD(int** A1, int n, int* A2)
+void BFSD(int** A1, int n, int* A2, int a0)
 {
 	queue<int> q;
-	int a;
-	cout << "Enter vertex: ";
-	cin >> a;
-	q.push(a); // помещаем в очередь вершину
-    A2[a] = 0;
+	q.push(a0); // помещаем в очередь вершину
+    A2[a0] = 0;
 	cout << "BFSD result: ";
 	while (!q.empty()) // пока не пуст
 	{
-		a = q.front(); // извлекаем вершину
+		a0 = q.front(); // извлекаем вершину
 		q.pop();
-		cout << a << " ";
+		cout << a0 << " ";
 		//for (int j = n - 1; j >= 0; j--) // проверяем для нее все смежные вершины
 		for (int j = 0; j < n; j++)
 		{
-			if (A1[a][j] == 1 && A2[j] == -1) // если вершина смежная и не обнаружена
+			if (A1[a0][j] == 1 && A2[j] == -1) // если вершина смежная и не обнаружена
 			{
 				q.push(j); // добавляем ее в очередь
-				A2[j] = A2[a] + 1; // отмечаем вершину как обнаруженную
+				A2[j] = A2[a0] + 1; // отмечаем вершину как обнаруженную
 			}
 		}
 	}
@@ -225,21 +222,21 @@ int** create(int n)
 int main()
 {
     clock_t start, end;
-	int n, ** t, a1, a3, a4;
+	int n, ** t, a0, a1, a3, a4;
 	cout << "Enter array size: ";
 	cin >> n;
 	List** vrt = (List**)malloc(n * sizeof(List*));
 	int* A2 = (int*)malloc(n * sizeof(int));
 	t = create(n);
-
 	for (int i = 0; i < n; i++)
 		A2[i] = -1;
 	cout << endl;
+	cout << "Enter vertex: ";
+	cin >> a0;
 	start = clock(); // старт таймера
-	BFSD(t, n, A2);
+	BFSD(t, n, A2, a0);
 	end = clock(); // остановка таймера
     float diff1 = (end - start);
-    
 	cout << endl;
 	for (int i = 0; i < n; i++)
 		cout << A2[i] << endl;
@@ -255,8 +252,6 @@ int main()
 	DFSD(A2, n, a1, t, s);
 	end = clock(); // остановка таймера
     float diff2 = (end - start);
-    
-	
 	cout << endl;
 	for (int i = 0; i < n; i++)
 		cout << A2[i] << endl;
@@ -275,8 +270,6 @@ int main()
 	BFSD_list(A2, n, vrt, a3);
 	end = clock(); // остановка таймера
     float diff3 = (end - start);
-    
-    
 	for (int i = 0; i < n; i++)
 		cout << A2[i] << endl;
 	cout << endl;
@@ -292,8 +285,6 @@ int main()
 	DFSD_list(A2, n, a4, vrt, k);
 	end = clock(); // остановка таймера
     float diff4 = (end - start);
-    
-    
 	cout << endl;
 	for (int i = 0; i < n; i++)
 		cout << A2[i] << endl;
@@ -303,6 +294,6 @@ int main()
 		free(t[i]);
 	free(t);
 	free(A2);
-	//system("pause");
+	system("pause");
 	return 0;
 }
